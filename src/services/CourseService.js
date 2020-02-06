@@ -1,4 +1,3 @@
-import React from "react";
 import { API_URL } from "../constants";
 
 export const createCourse = (course) =>
@@ -16,10 +15,20 @@ export const findAllCourses = async () => {
     return await response.json();
 }
 
-export const findCourseById = (id) => {
+export const findCourseById = (id) =>
     fetch(`${API_URL}/${id}`)
         .then(response => response.json())
-}
+
+
+export const updateCourse = (id, course) =>
+    fetch(`${API_URL}/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(course),
+        headers: {
+            'content-type': 'application/json'
+        }
+    })
+        .then(response => response.json())
 
 
 export const deleteCourse = (courseId) =>
