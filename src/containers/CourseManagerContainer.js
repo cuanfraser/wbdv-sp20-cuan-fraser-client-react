@@ -1,18 +1,21 @@
 import React from "react";
 import CourseTableComponent from "../components/CourseTableComponent";
 import CourseGridComponent from "../components/CourseGridComponent";
+import { findAllCourses, deleteCourse, createCourse } from "../services/CourseService";
 
 class CourseManagerContainer extends React.Component {
     state = {
         layout: 'table',
-        courses: [
-            { _id: '123', title: 'Course A' },
-            { _id: '456', title: 'Course B' },
-            { _id: '789', title: 'Course C' },
-            { _id: '101', title: 'Course D' },
-            { _id: '112', title: 'Course E' }
-        ]
+        showEditor: false,
+        newCourseTitle: 'yeet',
+        courses: []
     }
+
+    componentDidMount = async () => {
+        const courses = await findAllCourses();
+        this.setState({ courses: courses });
+    }
+
     toggle = () => {
         this.setState(prevState => {
             if (prevState.layout === 'table') {
@@ -28,23 +31,43 @@ class CourseManagerContainer extends React.Component {
         })
     }
 
-    deleteCourse = (course) =>
-        this.setState(prevState => {
-            return ({
-                courses: prevState.courses.filter(function (crs) {
-                    return crs._id !== course._id
+    deleteCourse = (course) => {
+        deleteCourse(course._id)
+            .then(status => {
+                this.setState(prevState => {
+                    return ({
+                        courses: prevState.courses.filter(function (crs) {
+                            return crs._id !== course._id
+                        })
+                    })
                 })
             })
-        })
+    }
 
-    addCourse = () =>
-        this.setState(prevState => {
+    addCourse = () => {
+        createCourse({
+            title: this.state.newCourseTitle
+        }).then(actualCourse => this.setState(prevState => {
             return ({
                 courses: [...prevState.courses, {
                     _id: (new Date()).getTime(),
-                    title: 'New Course'
+                    title: prevState.newCourseTitle
                 }]
             })
+        }))
+    }
+
+    updateForm = (newState) =>
+        this.setState(newState)
+
+    showEditor = () =>
+        this.setState({
+            showEditor: true
+        })
+
+    hideEditor = () =>
+        this.setState({
+            showEditor: false
         })
 
     render() {
@@ -52,9 +75,12 @@ class CourseManagerContainer extends React.Component {
             <div>
                 <h1>Course Manager</h1>
                 <button onClick={this.toggle}>Toggle</button>
+                <input onChange={(e) => this.updateForm({ newCourseTitle: e.target.value })}
+                    value={this.state.newCourseTitle} />
                 <button onClick={this.addCourse}>Add Course</button>
                 {this.state.layout === 'table' && <CourseTableComponent
                     courses={this.state.courses}
+                    showEditor={this.state.showEditor}
                     deleteCourse={this.deleteCourse} />}
                 {this.state.layout === 'grid' && <CourseGridComponent courses={this.state.courses} />}
             </div>
