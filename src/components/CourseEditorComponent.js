@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+import React from "react";
 
-<head>
-    <meta charset="UTF-8">
-    <title>Course Editor</title>
+const CourseEditorComponent = () => {
 
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" rel="stylesheet">
-    <link href="course-editor.stylesheet.client.css" rel="stylesheet" />
-
-</head>
-
-<body>
-    <div class="container-fluid">
+    return (<div class="container-fluid">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand wbdv-course-title" href="#">Course Editor</a>
@@ -149,7 +139,7 @@
                         <label for="textFld" class="col-sm-1 col-form-label">
                             Text </label>
                         <div class="col-sm-3">
-                            <input class="form-control wbdv-field wbdv-text" id="textFld" placeholder="Heading text">
+                            <input class="form-control wbdv-field wbdv-text" id="textFld" placeholder="Heading text" />
                         </div>
                     </div>
 
@@ -180,7 +170,7 @@
             </div>
         </div>
 
-    </div>
-</body>
+    </div>)
+}
 
-</html>
+export default CourseEditorComponent;

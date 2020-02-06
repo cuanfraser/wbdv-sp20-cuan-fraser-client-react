@@ -6,8 +6,8 @@ class CourseRow extends React.Component {
     }
     render() {
         return (
-            <li>
-                {!this.state.editing && <a onClick={this.props.showEditor} href="course-editor.template.client.html">
+            <li key={this.props.index}>
+                {!this.state.editing && <a onClick={this.props.showEditor} href="#">
                     {this.props.course.title}
                 </a>}
                 {this.state.editing && <input />}

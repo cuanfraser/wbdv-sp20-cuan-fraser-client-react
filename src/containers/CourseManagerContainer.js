@@ -2,6 +2,7 @@ import React from "react";
 import CourseTableComponent from "../components/CourseTableComponent";
 import CourseGridComponent from "../components/CourseGridComponent";
 import { findAllCourses, deleteCourse, createCourse } from "../services/CourseService";
+import CourseEditorComponent from "../components/CourseEditorComponent";
 
 class CourseManagerContainer extends React.Component {
     state = {
@@ -74,15 +75,21 @@ class CourseManagerContainer extends React.Component {
         return (
             <div>
                 <h1>Course Manager</h1>
-                <button onClick={this.toggle}>Toggle</button>
-                <input onChange={(e) => this.updateForm({ newCourseTitle: e.target.value })}
-                    value={this.state.newCourseTitle} />
-                <button onClick={this.addCourse}>Add Course</button>
-                {this.state.layout === 'table' && <CourseTableComponent
-                    courses={this.state.courses}
-                    showEditor={this.state.showEditor}
-                    deleteCourse={this.deleteCourse} />}
-                {this.state.layout === 'grid' && <CourseGridComponent courses={this.state.courses} />}
+
+                {this.state.showEditor && <CourseEditorComponent />}
+
+                {!this.state.showEditor &&
+                    <div>
+                        <button onClick={this.toggle}>Toggle</button>
+                        <input onChange={(e) => this.updateForm({ newCourseTitle: e.target.value })}
+                            value={this.state.newCourseTitle} />
+                        <button onClick={this.addCourse}>Add Course</button>
+                        {this.state.layout === 'table' && <CourseTableComponent
+                            courses={this.state.courses}
+                            showEditor={this.showEditor}
+                            deleteCourse={this.deleteCourse} />}
+                        {this.state.layout === 'grid' && <CourseGridComponent courses={this.state.courses} />}
+                    </div>}
             </div>
         )
     }
