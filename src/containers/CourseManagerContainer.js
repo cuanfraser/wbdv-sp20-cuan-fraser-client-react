@@ -2,7 +2,7 @@ import React from "react";
 import CourseTableComponent from "../components/CourseTableComponent";
 import CourseGridComponent from "../components/CourseGridComponent";
 import { findAllCourses, deleteCourse, createCourse, updateCourse } from "../services/CourseService";
-import CourseEditorComponent from "../components/CourseEditorComponent";
+import CourseEditorComponent from "../components/CourseEditor/CourseEditorComponent";
 import CourseListComponent from "../components/CourseListComponent";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
@@ -105,17 +105,18 @@ class CourseManagerContainer extends React.Component {
                     />
                     <Route path="/grid/" exact={true}
                         render={() =>
-                            <CourseListComponent
-                                courses={this.state.courses}
-                                showEditor={this.state.showEditor}
-                                deleteCourse={this.state.deleteCourse}
-                                updateCourse={this.state.updateCourse}
-                                updateForm={this.updateForm}
-                                newCourseTitle={this.state.newCourseTitle}
-                                addCourse={this.addCourse}
-                                layout={this.state.layout}
-                                toggle={this.toggle}
-                            />
+                            <CourseGridComponent/>
+                            // <CourseListComponent
+                            //     courses={this.state.courses}
+                            //     showEditor={this.state.showEditor}
+                            //     deleteCourse={this.state.deleteCourse}
+                            //     updateCourse={this.state.updateCourse}
+                            //     updateForm={this.updateForm}
+                            //     newCourseTitle={this.state.newCourseTitle}
+                            //     addCourse={this.addCourse}
+                            //     layout={this.state.layout}
+                            //     toggle={this.toggle}
+                            // />
                         }
                     />
                     {/* TODO: TEMP!!! */}
