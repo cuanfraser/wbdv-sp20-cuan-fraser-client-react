@@ -93,8 +93,8 @@ class CourseManagerContainer extends React.Component {
                             <CourseListComponent
                                 courses={this.state.courses}
                                 showEditor={this.state.showEditor}
-                                deleteCourse={this.state.deleteCourse}
-                                updateCourse={this.state.updateCourse}
+                                deleteCourse={this.deleteCourse}
+                                updateCourse={this.updateCourse}
                                 updateForm={this.updateForm}
                                 newCourseTitle={this.state.newCourseTitle}
                                 addCourse={this.addCourse}
@@ -109,8 +109,8 @@ class CourseManagerContainer extends React.Component {
                             // <CourseListComponent
                             //     courses={this.state.courses}
                             //     showEditor={this.state.showEditor}
-                            //     deleteCourse={this.state.deleteCourse}
-                            //     updateCourse={this.state.updateCourse}
+                            //     deleteCourse={this.deleteCourse}
+                            //     updateCourse={this.updateCourse}
                             //     updateForm={this.updateForm}
                             //     newCourseTitle={this.state.newCourseTitle}
                             //     addCourse={this.addCourse}
