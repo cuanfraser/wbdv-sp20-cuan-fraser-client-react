@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 const CourseEditorComponent = () => {
 
@@ -12,9 +13,9 @@ const CourseEditorComponent = () => {
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="../course-list/course-list.template.client.html">
+                    <Link to="/">
                         <i class="fas fa-times wbdv-course-editor wbdv-close"></i>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </nav>

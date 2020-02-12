@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom"
 
 class CourseRow extends React.Component {
     state = {
@@ -8,9 +9,9 @@ class CourseRow extends React.Component {
     render() {
         return (
             <li>
-                {!this.state.editing && <a onClick={() => this.props.showEditor} href="/course-editor">
+                {!this.state.editing && <Link to={`/course-editor/${this.props.course._id}`}>
                     {this.props.course.title}
-                </a>}
+                </Link>}
                 {this.state.editing && <input onChange={(e) => this.setState({ updateCourseTitle: e.target.value })}
                     value={this.state.updateCourseTitle} />}
                 <button onClick={() => this.props.deleteCourse(this.props.course)}>Delete</button>
