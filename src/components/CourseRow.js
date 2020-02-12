@@ -8,7 +8,7 @@ class CourseRow extends React.Component {
     render() {
         return (
             <li>
-                {!this.state.editing && <a onClick={() => this.props.showEditor} href="#">
+                {!this.state.editing && <a onClick={() => this.props.showEditor} href="/course-editor">
                     {this.props.course.title}
                 </a>}
                 {this.state.editing && <input onChange={(e) => this.setState({ updateCourseTitle: e.target.value })}
