@@ -9,7 +9,6 @@ const CourseListComponent = ({
     addCourse,
     layout,
     courses,
-    showEditor,
     deleteCourse,
     updateCourse
 }) =>
@@ -20,7 +19,6 @@ const CourseListComponent = ({
         <button onClick={addCourse}>Add Course</button>
         {layout === 'table' && <CourseTableComponent
             courses={courses}
-            showEditor={showEditor}
             deleteCourse={deleteCourse}
             updateCourse={updateCourse}
         />}

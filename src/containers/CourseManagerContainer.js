@@ -9,7 +9,6 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 class CourseManagerContainer extends React.Component {
     state = {
         layout: 'table',
-        showEditor: false,
         newCourseTitle: '',
         courses: []
     }
@@ -72,19 +71,9 @@ class CourseManagerContainer extends React.Component {
     updateForm = (newState) =>
         this.setState(newState)
 
-    showEditor = () =>
-        this.setState({
-            showEditor: true
-        })
-
-    hideEditor = () =>
-        this.setState({
-            showEditor: false
-        })
-
     render() {
         return (
-            <div>
+            <div class="container-fluid">
                 <h1>Course Manager</h1>
 
                 <Router>
@@ -92,7 +81,6 @@ class CourseManagerContainer extends React.Component {
                         render={() =>
                             <CourseListComponent
                                 courses={this.state.courses}
-                                showEditor={this.state.showEditor}
                                 deleteCourse={this.deleteCourse}
                                 updateCourse={this.updateCourse}
                                 updateForm={this.updateForm}
@@ -108,7 +96,6 @@ class CourseManagerContainer extends React.Component {
                             <CourseGridComponent/>
                             // <CourseListComponent
                             //     courses={this.state.courses}
-                            //     showEditor={this.state.showEditor}
                             //     deleteCourse={this.deleteCourse}
                             //     updateCourse={this.updateCourse}
                             //     updateForm={this.updateForm}
