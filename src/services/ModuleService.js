@@ -34,3 +34,11 @@ export const deleteModule = (moduleId) =>
         method: "DELETE"
     })
         .then(response => response.json())
+
+export default {
+    createModule,
+    findModuleForCourse,
+    findModule,
+    updateModule,
+    deleteModule
+}
