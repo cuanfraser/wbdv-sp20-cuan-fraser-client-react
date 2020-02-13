@@ -106,7 +106,6 @@ class CourseManagerContainer extends React.Component {
                             // />
                         }
                     />
-                    {/* TODO: TEMP!!! */}
                     <Route path="/course-editor/" exact={true}
                         render={(props) =>
                             <CourseEditorComponent

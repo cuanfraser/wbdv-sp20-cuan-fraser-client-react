@@ -7,14 +7,16 @@ import WidgetListComponent from "./WidgetListComponent";
 import { Provider } from "react-redux";
 import moduleReducer from "../../reducers/moduleReducer";
 import { createStore, combineReducers } from "redux";
+import lessonReducer from "../../reducers/lessonReducer";
 
 const rootReducer = combineReducers({
-    modules: moduleReducer
+    modules: moduleReducer,
+    lessons: lessonReducer
 })
 
 const store = createStore(rootReducer);
 
-const CourseEditorComponent = ({ courseId }) => {
+const CourseEditorComponent = ({ courseId, moduleId, lessonId }) => {
 
     return (
         <Provider store={store}>
@@ -42,9 +44,9 @@ const CourseEditorComponent = ({ courseId }) => {
                     </div>
                     <div class="col-8">
 
-                        <LessonTabsComponent />
+                        <LessonTabsComponent moduleId={moduleId}/>
 
-                        <TopicPillsComponent />
+                        <TopicPillsComponent lessonId={lessonId}/>
 
                         <WidgetListComponent />
                     </div>
