@@ -1,4 +1,4 @@
-import {CREATE_MODULE, FIND_MODULE_FOR_COURSE, FIND_MODULE, UPDATE_MODULE, DELETE_MODULE} from "../constants.js"
+import {CREATE_MODULE, FIND_MODULE_FOR_COURSE, FIND_MODULE, UPDATE_MODULE, DELETE_MODULE, SYNC_EDIT_INPUT} from "../constants.js"
 
 export const createModule = (module) => ({
     type: CREATE_MODULE,
@@ -10,7 +10,19 @@ export const findModuleForCourse = (modules) => ({
     modules: modules
 })
 
+export const updateModule = (moduleId, module) => ({
+    type: UPDATE_MODULE,
+    moduleId: moduleId,
+    module: module
+})
+
 export const deleteModule = (moduleId) => ({
     type: DELETE_MODULE,
     moduleId: moduleId
+})
+
+export const syncEditInput = (moduleId, editModuleTitle) => ({
+    type: SYNC_EDIT_INPUT,
+    moduleId: moduleId,
+    editModuleTitle: editModuleTitle
 })
