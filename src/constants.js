@@ -5,6 +5,7 @@ export const COURSES_URL = `${API_URL}/courses`
 export const MODULES_URL = `${API_URL}/modules`
 export const LESSONS_URL = `${API_URL}/lessons`
 export const TOPICS_URL = `${API_URL}/topics`
+export const WIDGETS_URL = `${API_URL}/widgets`
 
 export const CREATE_MODULE = "CREATE_MODULE"
 export const FIND_MODULE_FOR_COURSE = "FIND_MODULE_FOR_COURSE"
@@ -24,3 +25,9 @@ export const FIND_TOPIC_FOR_LESSON = "FIND_TOPIC_FOR_LESSON"
 export const FIND_TOPIC = "FIND_TOPIC"
 export const UPDATE_TOPIC = "UPDATE_TOPIC"
 export const DELETE_TOPIC = "DELTE_TOPIC"
+
+export const CREATE_WIDGET = "CREATE_WIDGET"
+export const DELETE_WIDGET = "DELETE_WIDGET"
+export const UPDATE_WIDGET = "UPDATE_WIDGET"
+export const FIND_ALL_WIDGETS_FOR_TOPIC = "FIND_ALL_WIDGETS_FOR_TOPIC"
+export const FIND_ALL_WIDGETS = "FIND_ALL_WIDGETS"

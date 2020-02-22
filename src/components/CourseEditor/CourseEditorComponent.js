@@ -8,15 +8,17 @@ import { Provider } from "react-redux";
 import moduleReducer from "../../reducers/moduleReducer";
 import { createStore, combineReducers } from "redux";
 import lessonReducer from "../../reducers/lessonReducer";
+import widgetReducer from "../../reducers/widgetReducer";
 
 const rootReducer = combineReducers({
     modules: moduleReducer,
-    lessons: lessonReducer
+    lessons: lessonReducer,
+    widgets: widgetReducer
 })
 
 const store = createStore(rootReducer);
 
-const CourseEditorComponent = ({ courseId, moduleId, lessonId }) => {
+const CourseEditorComponent = ({ courseId, moduleId, lessonId, topicId }) => {
 
     return (
         <Provider store={store}>
@@ -48,7 +50,7 @@ const CourseEditorComponent = ({ courseId, moduleId, lessonId }) => {
 
                         <TopicPillsComponent lessonId={lessonId}/>
 
-                        <WidgetListComponent />
+                        <WidgetListComponent topicId={topicId}/>
                     </div>
                 </div>
 
