@@ -1,7 +1,11 @@
-import { TOPICS_URL, WIDGETS_URL } from "../constants";
+//import { TOPICS_URL, WIDGETS_URL } from "../constants";
+// TODO: Change BACK
+const WIDGETS_URL = "http://localhost:8080/widgets"
+const TOPICS_URL = "http://localhost:8080/topics"
 
 export const createWidget = (topicId, widget) =>
-    fetch(`${TOPICS_URL}/${topicId}/widgets`, {
+    //fetch(`${TOPICS_URL}/${topicId}/widgets`, {
+    fetch(`${WIDGETS_URL}`, {
         method: 'POST',
         body: JSON.stringify(widget),
         headers: {
@@ -10,7 +14,7 @@ export const createWidget = (topicId, widget) =>
     })
         .then(response => response.json())
 
-export const findWidgetForTopic = (topicId) =>
+export const findWidgetsForTopic = (topicId) =>
     fetch(`${TOPICS_URL}/${topicId}/widgets`)
         .then(response => response.json())
 
@@ -37,7 +41,7 @@ export const deleteWidget = (widgetId) =>
 
 export default {
     createWidget,
-    findWidgetForTopic,
+    findWidgetsForTopic,
     findWidget,
     updateWidget,
     deleteWidget

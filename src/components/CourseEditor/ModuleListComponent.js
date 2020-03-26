@@ -1,13 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
-import {Link} from "react-router-dom"
 import moduleService from "../../services/ModuleService";
-import { createModule, deleteModule, findModuleForCourse, updateModule, syncEditInput } from "../../actions/moduleActions";
+import { createModule, findModulesForCourse } from "../../actions/moduleActions";
+import ModuleListItemComponent from "./ModuleListItemComponent"
 
 class ModuleListComponent extends React.Component {
 
+    state = {
+        newModuleTitle: ""
+    }
+
     componentDidMount() {
-        this.props.findModuleForCourse(this.props.courseId)
+        this.props.findModulesForCourse(this.props.courseId)
     }
 
     render() {
@@ -15,27 +19,14 @@ class ModuleListComponent extends React.Component {
             <div>
                 <h2>Module List</h2>
 
-                <div class="list-group wbdv-module-list">
-                    {this.props.modules.map(module =>
-                        <div class="list-group-item list-group-item-action d-flex wbdv-module-item wbdv-module-item-title">
-                            <Link to={`/course-editor/${this.props.courseId}/module/${module._id}`} class="mr-auto p-1">
-                                <div  id={`${module._id}-title`}>{module.title}</div>
-                            </Link>
-                            <input id={`${module._id}-input`} style={{ visibility: "hidden" }} value={this.props.editModuleTitle} onChange={(e) => syncEditInput(module._id, e.target.value)} />
-                            <i class="fas fa-edit fa pt-1 p-1 wbdv-module-item-edit-btn"
-                                onClick={() => {
-                                    document.getElementById(`${module._id}-title`).style.visibility = "hidden";
-                                    document.getElementById(`${module._id}-input`).style.visibility = "visible";
-                                }}></i>
-                            <i class="far fa-save fa pt-1 p-1 wbdv-module-item-save-btn"
-                                onClick={() => this.props.updateModule(module._id, { _id: module._id, title: this.props.editModuleTitle, _courses: module._courses })}></i>
-                            <i class="fas fa-times fa pt-1 p-1 wbdv-module-item-delete-btn" onClick={() => this.props.deleteModule(module._id)}></i>
-                        </div>
+                <div className="list-group wbdv-module-list">
+                    {this.props.modules && this.props.modules.map(module =>
+                        <ModuleListItemComponent key={module._id} history={this.props.history} courseId={this.props.courseId} moduleId={this.props.moduleId} module={module} />
                     )}
 
-                    <a class="list-group-item list-group-item-action d-flex justify-content-center wbdv-topic-add-btn"
-                        href="#" onClick={() => this.props.createModule(this.props.courseId)} > <i class="fas fa-plus fa pt-1"></i>
-                    </a>
+                    <button className="list-group-item list-group-item-action d-flex justify-content-center"
+                        onClick={() => this.props.createModule(this.props.courseId)} > <i className="fas fa-plus fa pt-1"></i>
+                    </button>
                 </div>
             </div>)
     }
@@ -43,8 +34,7 @@ class ModuleListComponent extends React.Component {
 
 const stateToPropertyMapper = (state) => {
     return {
-        modules: state.modules.modules,
-        editModuleTitle: state.modules.editModuleTitle
+        modules: state.modules.modules
     }
 }
 
@@ -55,23 +45,10 @@ const dispatchToPropertyMapper = (dispatch) => {
                 .then(actualModule =>
                     dispatch(createModule(actualModule)))
         },
-        findModuleForCourse: (courseId) => {
-            moduleService.findModuleForCourse(courseId)
+        findModulesForCourse: (courseId) => {
+            moduleService.findModulesForCourse(courseId)
                 .then(modules =>
-                    dispatch(findModuleForCourse(modules)))
-        },
-        updateModule: (moduleId, module) => {
-            moduleService.updateModule(moduleId, module)
-                .then(actualModule =>
-                    dispatch(updateModule(moduleId, actualModule)))
-        },
-        deleteModule: (moduleId) => {
-            moduleService.deleteModule(moduleId)
-                .then(status =>
-                    dispatch(deleteModule(moduleId)))
-        },
-        syncEditInput: (moduleId, editModuleTitle) => {
-            dispatch(syncEditInput(moduleId, editModuleTitle))
+                    dispatch(findModulesForCourse(modules)))
         }
     }
 }

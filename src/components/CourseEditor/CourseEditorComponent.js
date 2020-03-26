@@ -8,49 +8,51 @@ import { Provider } from "react-redux";
 import moduleReducer from "../../reducers/moduleReducer";
 import { createStore, combineReducers } from "redux";
 import lessonReducer from "../../reducers/lessonReducer";
+import topicReducer from "../../reducers/topicReducer";
 import widgetReducer from "../../reducers/widgetReducer";
 
 const rootReducer = combineReducers({
     modules: moduleReducer,
     lessons: lessonReducer,
+    topics: topicReducer,
     widgets: widgetReducer
 })
 
 const store = createStore(rootReducer);
 
-const CourseEditorComponent = ({ courseId, moduleId, lessonId, topicId }) => {
+const CourseEditorComponent = ({ courseId, moduleId, lessonId, topicId, history }) => {
 
     return (
         <Provider store={store}>
 
-            <div class="container-fluid">
+            <div className="container-fluid">
 
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <a class="navbar-brand wbdv-course-title" href="#">Course Editor: {courseId}</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <div className="navbar-brand wbdv-course-title">Course Editor: {courseId}</div>
+                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+                        <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                        <div class="navbar-nav">
+                    <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div className="navbar-nav">
                             <Link to="/">
-                                <i class="fas fa-times wbdv-course-editor wbdv-close"></i>
+                                <i className="fas fa-times wbdv-course-editor wbdv-close"></i>
                             </Link>
                         </div>
                     </div>
                 </nav>
 
-                <div class="row">
-                    <div class="col-4">
-                        <ModuleListComponent courseId={courseId} />
+                <div className="row">
+                    <div className="col-4">
+                        <ModuleListComponent courseId={courseId} moduleId={moduleId} history={history} />
                     </div>
-                    <div class="col-8">
+                    <div className="col-8">
 
-                        <LessonTabsComponent moduleId={moduleId}/>
+                        <LessonTabsComponent courseId={courseId} moduleId={moduleId} lessonId={lessonId} history={history}/>
 
-                        <TopicPillsComponent lessonId={lessonId}/>
+                        <TopicPillsComponent courseId={courseId} moduleId={moduleId} lessonId={lessonId} topicId={topicId} history={history}/>
 
-                        <WidgetListComponent topicId={topicId}/>
+                        <WidgetListComponent courseId={courseId} topicId={topicId} history={history}/>
                     </div>
                 </div>
 

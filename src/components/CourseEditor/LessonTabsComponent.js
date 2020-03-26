@@ -1,35 +1,43 @@
 import React from "react";
 import { connect } from "react-redux";
 import lessonService from "../../services/LessonService.js"
-import { createLesson, findLesson, updateLesson, deleteLesson, findLessonForModule } from "../../actions/lessonActions";
+import { createLesson, findLessonsForModule } from "../../actions/lessonActions";
+import LessonTabsItemComponent from "./LessonTabsItemComponent";
 
 class LessonTabsComponent extends React.Component {
 
-    componentDidMount() {
-        this.props.findLessonForModule(this.props.moduleId)
+    state = {
+        newLessonTitle: ""
     }
+
+    componentDidMount() {
+        this.props.findLessonsForModule(this.props.moduleId)
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.moduleId !== this.props.moduleId) {
+          this.props.findLessonsForModule(this.props.moduleId);
+        }
+      }
 
     render() {
         return (
             <div>
                 <h2>Lessons</h2>
 
-                <ul class="nav nav-tabs">
+                <ul className="nav nav-tabs">
 
                     {this.props.lessons.map(lesson =>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                {lesson.title}
-                            </a>
-                        </li>
+                        <LessonTabsItemComponent key={lesson._id} history={this.props.history} courseId={this.props.courseId}
+                            moduleId={this.props.moduleId} lessonId={this.props.lessonId} lesson={lesson} />
                     )}
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-plus fa pt-1" onClick={() => this.props.createLesson(this.props.moduleId)} ></i>
-                        </a>
+                    <li className="nav-item">
+                        <button className="nav-link link-button">
+                            <i className="fas fa-plus fa pt-1" onClick={() => this.props.createLesson(this.props.moduleId)} ></i>
+                        </button>
                     </li>
-                    
+
                 </ul>
             </div>
         )
@@ -49,20 +57,10 @@ const dispatchToPropertyMapper = (dispatch) => {
                 .then(actualLesson =>
                     dispatch(createLesson(actualLesson)))
         },
-        findLessonForModule: (moduleId) => {
-            lessonService.findLessonForModule(moduleId)
+        findLessonsForModule: (moduleId) => {
+            lessonService.findLessonsForModule(moduleId)
                 .then(lessons =>
-                    dispatch(findLessonForModule(lessons)))
-        },
-        updateLesson: (lessonId, module) => {
-            lessonService.updateLesson(lessonId, module)
-                .then(actualLesson =>
-                    dispatch(updateLesson(lessonId, actualLesson)))
-        },
-        deleteLesson: (lessonId) => {
-            lessonService.deleteLesson(lessonId)
-                .then(status =>
-                    dispatch(deleteLesson(lessonId)))
+                    dispatch(findLessonsForModule(lessons)))
         }
     }
 }

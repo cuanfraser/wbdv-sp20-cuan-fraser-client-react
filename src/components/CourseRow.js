@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 
 class CourseRow extends React.Component {
     state = {
@@ -19,12 +19,11 @@ class CourseRow extends React.Component {
                     this.setState({ editing: true })}>Edit</button>
 
                 <button onClick={() => {
-                    {this.setState(prevState => {
+                    this.setState(prevState => {
                         return this.props.updateCourse({ _id: this.props.course._id, title: prevState.updateCourseTitle })
-                    })};
-                    {this.setState({ editing: false, updateCourseTitle: '' })};
-                }
-                }>Save</button>
+                    })
+                    this.setState({ editing: false, updateCourseTitle: '' })
+                }}>Save</button>
             </li>
         )
     }

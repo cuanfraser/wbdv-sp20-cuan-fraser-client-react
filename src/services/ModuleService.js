@@ -10,7 +10,7 @@ export const createModule = (courseId, module) =>
     })
         .then(response => response.json())
 
-export const findModuleForCourse = (courseId) =>
+export const findModulesForCourse = (courseId) =>
     fetch(`${COURSES_URL}/${courseId}/modules`)
         .then(response => response.json())
 
@@ -37,7 +37,7 @@ export const deleteModule = (moduleId) =>
 
 export default {
     createModule,
-    findModuleForCourse,
+    findModulesForCourse,
     findModule,
     updateModule,
     deleteModule

@@ -1,10 +1,8 @@
 import React from "react";
-import CourseTableComponent from "../components/CourseTableComponent";
-import CourseGridComponent from "../components/CourseGridComponent";
 import { findAllCourses, deleteCourse, createCourse, updateCourse } from "../services/CourseService";
 import CourseEditorComponent from "../components/CourseEditor/CourseEditorComponent";
 import CourseListComponent from "../components/CourseListComponent";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 class CourseManagerContainer extends React.Component {
     state = {
@@ -73,7 +71,7 @@ class CourseManagerContainer extends React.Component {
 
     render() {
         return (
-            <div class="container-fluid">
+            <div className="container-fluid">
                 <h1>Course Manager</h1>
 
                 <Router>
@@ -88,28 +86,22 @@ class CourseManagerContainer extends React.Component {
                                 addCourse={this.addCourse}
                                 layout={this.state.layout}
                                 toggle={this.toggle}
+                                history={this.props.history}
                             />
                         }
                     />
                     <Route path="/grid/" exact={true}
                         render={() =>
-                            <CourseGridComponent />
-                            // <CourseListComponent
-                            //     courses={this.state.courses}
-                            //     deleteCourse={this.deleteCourse}
-                            //     updateCourse={this.updateCourse}
-                            //     updateForm={this.updateForm}
-                            //     newCourseTitle={this.state.newCourseTitle}
-                            //     addCourse={this.addCourse}
-                            //     layout={this.state.layout}
-                            //     toggle={this.toggle}
-                            // />
-                        }
-                    />
-                    <Route path="/course-editor/" exact={true}
-                        render={(props) =>
-                            <CourseEditorComponent
-                                {...props}
+                            <CourseListComponent
+                                courses={this.state.courses}
+                                deleteCourse={this.deleteCourse}
+                                updateCourse={this.updateCourse}
+                                updateForm={this.updateForm}
+                                newCourseTitle={this.state.newCourseTitle}
+                                addCourse={this.addCourse}
+                                layout={this.state.layout}
+                                toggle={this.toggle}
+                                history={this.props.history}
                             />
                         }
                     />
@@ -118,6 +110,7 @@ class CourseManagerContainer extends React.Component {
                         render={(props) =>
                             <CourseEditorComponent
                                 {...props}
+                                history={props.history}
                                 courseId={props.match.params.courseId} />
                         } />
                     <Route path="/course-editor/:courseId/module/:moduleId"
@@ -125,6 +118,7 @@ class CourseManagerContainer extends React.Component {
                         render={(props) =>
                             <CourseEditorComponent
                                 {...props}
+                                history={props.history}
                                 moduleId={props.match.params.moduleId}
                                 courseId={props.match.params.courseId} />
                         } />
@@ -133,6 +127,7 @@ class CourseManagerContainer extends React.Component {
                         render={(props) =>
                             <CourseEditorComponent
                                 {...props}
+                                history={props.history}
                                 lessonId={props.match.params.lessonId}
                                 moduleId={props.match.params.moduleId}
                                 courseId={props.match.params.courseId} />
@@ -142,6 +137,7 @@ class CourseManagerContainer extends React.Component {
                         render={(props) =>
                             <CourseEditorComponent
                                 {...props}
+                                history={props.history}
                                 topicId={props.match.params.topicId}
                                 lessonId={props.match.params.lessonId}
                                 moduleId={props.match.params.moduleId}

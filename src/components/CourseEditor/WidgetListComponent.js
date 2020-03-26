@@ -7,33 +7,42 @@ import ParagraphWidgetComponent from "./widgets/ParagraphWidgetComponent.js"
 
 class WidgetListComponent extends React.Component {
     componentDidMount() {
-        this.props.findWidgetForTopic(this.props.topicId)
+        this.props.findWidgetsForTopic(this.props.topicId)
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.topicId !== this.props.topicId) {
+            this.props.findWidgetsForTopic(this.props.topicId)
+        }
+    }
+
+    state = {
+        widget: {
+            title: ''
+        }
+    }
+
+    save = (widget) => {
+        this.setState(prevState => {
+            return {
+                widget: widget
+            }
+        })
+        this.props.updateWidget(widget.id, widget)
+    }
+
     render() {
         return (
             <div>
                 <h4>Widget List</h4>
 
-                {console.log(this.props.widgets)}
-
                 {this.props.widgets && this.props.widgets.map(widget =>
-                    <div>
-                        <button onClick={() =>
-                            this.props.deleteWidget(widget.id)}>
-                            X
-                            </button>
-                        <button onClick={() =>
-                            this.setState({
-                                widget: widget
-                            })}>
-                            ...
-                            </button>
-                        <h3>Common to all widgets</h3>
+                    <div key={widget.id} >
                         {
                             widget.type === "HEADING" &&
                             <HeadingWidgetComponent
                                 save={this.save}
-                                editing={false}//widget.id === this.state.widget.id}
+                                editing={widget.id === this.state.widget.id}
                                 widget={widget} />
                         }
                         {
@@ -43,72 +52,46 @@ class WidgetListComponent extends React.Component {
                                 editing={widget.id === this.state.widget.id}
                                 widget={widget} />
                         }
+                        <button onClick={() =>
+                            this.setState({
+                                widget: widget
+                            })}>
+                            ...
+                        </button>
+                        
+                        <div className="row">
+                            <div className="col-sm-1">
+                                <button className="btn btn-success btn-block wbdv-button" id="saveBtn">
+                                    <i className="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <div className="col-sm-1">
+                                <button className="btn btn-danger btn-block wbdv-button" id="deleteBtn"
+                                    onClick={() =>
+                                        this.props.deleteWidget(widget.id)}>
+                                    <i className="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                            <div className="col-sm-1">
+                                <button className="btn btn-warning btn-block wbdv-button" id="upBtn">
+                                    <i className="fas fa-arrow-up"></i>
+                                </button>
+                            </div>
+                            <div className="col-sm-1">
+                                <button className="btn btn-warning btn-block wbdv-button" id="downBtn">
+                                    <i className="fas fa-arrow-down"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 )}
 
-                {false && <div>
-                    <h5>Heading Widget</h5>
+                <button className="btn btn-primary wbdv-button" id="addWidgetBtn"
+                    onClick={() =>
+                        this.props.createWidget(this.props.topicId, { "type": "HEADING", "title": "test", "size": 1 })}>
+                    <i className="fas fa-plus"></i>
+                </button>
 
-                    <form>
-                        <div class="form-group row">
-                            <label for="typeFld" class="col-sm-1 col-form-label">
-                                Type </label>
-                            <div class="col-sm-3">
-                                <select class="form-control wbdv-field wbdv-type" id="typeFld">
-                                    <option selected value="Heading">Heading</option>
-                                    <option value="Text">Text</option>
-                                    <option value="Image">Image</option>
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group row">
-                            <label for="sizeFld" class="col-sm-1 col-form-label">
-                                Size </label>
-                            <div class="col-sm-3">
-                                <select class="form-control wbdv-field wbdv-type" id="sizeFld">
-                                    <option selected value="Heading 1">Heading 1</option>
-                                    <option value="Heading 2">Heading 2</option>
-                                    <option value="Heading 2">Heading 3</option>
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group row">
-                            <label for="textFld" class="col-sm-1 col-form-label">
-                                Text </label>
-                            <div class="col-sm-3">
-                                <input class="form-control wbdv-field wbdv-text" id="textFld" placeholder="Heading text" />
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-sm-1">
-                                <button class="btn btn-success btn-block wbdv-button" id="saveBtn">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                            <div class="col-sm-1">
-                                <button class="btn btn-danger btn-block wbdv-button" id="deleteBtn">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </div>
-                            <div class="col-sm-1">
-                                <button class="btn btn-warning btn-block wbdv-button" id="upBtn">
-                                    <i class="fas fa-arrow-up"></i>
-                                </button>
-                            </div>
-                            <div class="col-sm-1">
-                                <button class="btn btn-warning btn-block wbdv-button" id="downBtn">
-                                    <i class="fas fa-arrow-down"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
-                </div> }
             </div>
         )
     }
@@ -125,11 +108,11 @@ const dispatcherToPropertyMapper = (dispatch) => ({
     deleteWidget: (wid) =>
         widgetService.deleteWidget(wid)
             .then(status => dispatch(deleteWidget(wid))),
-    createWidget: (widget) =>
-        widgetService.createWidget(this.props.topicId, widget)
+    createWidget: (tid, widget) =>
+        widgetService.createWidget(tid, widget)
             .then(actualWidget => dispatch(createWidget(actualWidget))),
-    findWidgetForTopic: (tid) =>
-        widgetService.findWidgetForTopic(tid)
+    findWidgetsForTopic: (tid) =>
+        widgetService.findWidgetsForTopic(tid)
             .then(widgets => dispatch(findAllWidgetsForTopic(widgets)))
 })
 

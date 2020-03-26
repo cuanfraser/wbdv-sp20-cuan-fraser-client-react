@@ -1,12 +1,12 @@
-import {CREATE_MODULE, FIND_MODULE_FOR_COURSE, FIND_MODULE, UPDATE_MODULE, DELETE_MODULE, SYNC_EDIT_INPUT} from "../constants.js"
+import {CREATE_MODULE, FIND_MODULES_FOR_COURSE, UPDATE_MODULE, DELETE_MODULE, SYNC_EDIT_INPUT} from "../constants.js"
 
 export const createModule = (module) => ({
     type: CREATE_MODULE,
     newModule: module
 })
 
-export const findModuleForCourse = (modules) => ({
-    type: FIND_MODULE_FOR_COURSE,
+export const findModulesForCourse = (modules) => ({
+    type: FIND_MODULES_FOR_COURSE,
     modules: modules
 })
 

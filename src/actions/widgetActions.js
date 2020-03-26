@@ -1,4 +1,4 @@
-import {CREATE_WIDGET, FIND_ALL_WIDGETS_FOR_TOPIC, FIND_ALL_WIDGETS, UPDATE_WIDGET, DELETE_WIDGET} from "../constants.js"
+import {CREATE_WIDGET, FIND_ALL_WIDGETS_FOR_TOPIC, UPDATE_WIDGET, DELETE_WIDGET} from "../constants.js"
 
 export const createWidget = (widget) => ({
     type: CREATE_WIDGET,

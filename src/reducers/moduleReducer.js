@@ -1,8 +1,7 @@
-import { CREATE_MODULE, FIND_MODULE_FOR_COURSE, FIND_MODULE, UPDATE_MODULE, DELETE_MODULE, SYNC_EDIT_INPUT } from "../constants.js";
+import { CREATE_MODULE, FIND_MODULES_FOR_COURSE, UPDATE_MODULE, DELETE_MODULE } from "../constants.js";
 
 const initialState = {
-    modules: [],
-    editModuleTitle: "test"
+    modules: []
 }
 
 const moduleReducer = (state = initialState, action) => {
@@ -15,24 +14,17 @@ const moduleReducer = (state = initialState, action) => {
                     action.newModule
                 ]
             }
-        case FIND_MODULE_FOR_COURSE:
+        case FIND_MODULES_FOR_COURSE:
             return {
                 modules: action.modules
             }
         case UPDATE_MODULE:
             return {
-                modules: [
-                    state.modules.filter(module => module._id !== action.moduleId),
-                    action.module
-                ]
+                modules: state.modules.map(module => module._id === action.module._id ? action.module : module)
             }
         case DELETE_MODULE:
             return {
                 modules: state.modules.filter(module => module._id !== action.moduleId)
-            }
-        case SYNC_EDIT_INPUT:
-            return {
-                editModuleTitle: action.editModuleTitle
             }
         default:
             return state
