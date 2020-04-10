@@ -7,7 +7,8 @@ import ModuleListItemComponent from "./ModuleListItemComponent"
 class ModuleListComponent extends React.Component {
 
     state = {
-        newModuleTitle: ""
+        newModuleTitle: "",
+        module: this.props.module
     }
 
     componentDidMount() {

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import widgetService from "../../../services/WidgetService.js"
 import { deleteWidget, updateWidget } from "../../../actions/widgetActions"
 
-class ParagraphWidgetComponent extends React.Component {
+class ImageWidgetComponent extends React.Component {
     state = {
         editing: false,
         widget: this.props.widget
@@ -48,12 +48,12 @@ class ParagraphWidgetComponent extends React.Component {
         }))
     }
 
-    textChangeEvent = e => {
+    urlChangeEvent = e => {
         e.persist();
         this.setState(prevState => ({
             widget: {
                 ...prevState.widget,
-                text: e.target.value
+                url: e.target.value
             }
         }))
     }
@@ -75,7 +75,7 @@ class ParagraphWidgetComponent extends React.Component {
                     !this.state.editing &&
                     <div className="row">
                         <div className="col-11">
-                            <p>{this.state.widget.text}</p>
+                            <img className="img-fluid" src={this.state.widget.url} alt={this.state.widget.url} />
                         </div>
                         <button className="btn btn-block col-1" onClick={this.enableEditMode}>
                             <i className="fas fa-edit" ></i>
@@ -102,11 +102,11 @@ class ParagraphWidgetComponent extends React.Component {
                         </div>
 
                         <div className="form-group row">
-                            <label htmlFor="textFld" className="col-sm-1 col-form-label">
-                                Text </label>
+                            <label htmlFor="imageUrlFld" className="col-sm-1 col-form-label">
+                                Image URL </label>
                             <div className="col">
-                                <textarea className="form-control wbdv-field wbdv-text" value={this.state.widget.text} placeholder="Paragraph text"
-                                    onChange={this.textChangeEvent}
+                                <input type="url" id="imageUrlFld" className="form-control wbdv-field wbdv-text" value={this.state.widget.url} placeholder="Image URL"
+                                    onChange={this.urlChangeEvent}
                                 />
                             </div>
                         </div>
@@ -170,4 +170,4 @@ const dispatcherToPropertyMapper = (dispatch) => ({
 })
 
 
-export default connect(stateToPropertyMapper, dispatcherToPropertyMapper)(ParagraphWidgetComponent);
+export default connect(stateToPropertyMapper, dispatcherToPropertyMapper)(ImageWidgetComponent);

@@ -1,4 +1,6 @@
-import { LESSONS_URL, TOPICS_URL } from "../constants";
+//import { LESSONS_URL, TOPICS_URL } from "../constants";
+const LESSONS_URL = "http://localhost:8080/api/lessons"
+const TOPICS_URL = "http://localhost:8080/api/topics"
 
 export const createTopic = (lessonId, topic) =>
     fetch(`${LESSONS_URL}/${lessonId}/topics`, {

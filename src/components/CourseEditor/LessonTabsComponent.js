@@ -16,29 +16,33 @@ class LessonTabsComponent extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.moduleId !== this.props.moduleId) {
-          this.props.findLessonsForModule(this.props.moduleId);
+            this.props.findLessonsForModule(this.props.moduleId);
         }
-      }
+    }
 
     render() {
         return (
             <div>
-                <h2>Lessons</h2>
+                {this.props.moduleId &&
+                    <>
+                        <h2>Lessons</h2>
 
-                <ul className="nav nav-tabs">
+                        <ul className="nav nav-tabs">
 
-                    {this.props.lessons.map(lesson =>
-                        <LessonTabsItemComponent key={lesson._id} history={this.props.history} courseId={this.props.courseId}
-                            moduleId={this.props.moduleId} lessonId={this.props.lessonId} lesson={lesson} />
-                    )}
+                            {this.props.lessons.map(lesson =>
+                                <LessonTabsItemComponent key={lesson._id} history={this.props.history} courseId={this.props.courseId}
+                                    moduleId={this.props.moduleId} lessonId={this.props.lessonId} lesson={lesson} />
+                            )}
 
-                    <li className="nav-item">
-                        <button className="nav-link link-button">
-                            <i className="fas fa-plus fa pt-1" onClick={() => this.props.createLesson(this.props.moduleId)} ></i>
-                        </button>
-                    </li>
+                            <li className="nav-item">
+                                <button className="nav-link link-button">
+                                    <i className="fas fa-plus fa pt-1" onClick={() => this.props.createLesson(this.props.moduleId)} ></i>
+                                </button>
+                            </li>
 
-                </ul>
+                        </ul>
+                    </>
+                }
             </div>
         )
     }

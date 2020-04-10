@@ -8,13 +8,13 @@ class TopicPillsItemComponent extends React.Component {
 
     state = {
         edit: false,
-        newTitle: "",
-        selected: false
+        selected: false,
+        topic: this.props.topic
     }
 
     componentDidMount() {
         this.setState({
-            selected: this.props.topic._id === this.props.topicId
+            selected: this.props.topic.id === this.props.topicId
         })
     }
 
@@ -22,9 +22,9 @@ class TopicPillsItemComponent extends React.Component {
         if (prevState.selected !== this.state.selected) {
             this.setState({ edit: false })
         }
-        if (this.state.selected !== (this.props.topic._id === this.props.topicId)) {
+        if (this.state.selected !== (this.props.topic.id === this.props.topicId)) {
             this.setState({
-                selected: this.props.topic._id === this.props.topicId
+                selected: this.props.topic.id === this.props.topicId
             })
         }
     }
@@ -36,38 +36,47 @@ class TopicPillsItemComponent extends React.Component {
 
     updateTopicEvent = e => {
         e.stopPropagation()
-        const topic = { ...this.props.topic }
-        topic.title = this.state.newTitle;
-        this.props.updateTopic(topic._id, topic)
+        this.props.updateTopic(this.state.topic.id, this.state.topic)
         this.setState({ edit: false })
+    }
+
+    cancelChangeEvent = e => {
+        e.stopPropagation()
+        this.setState({ topic: this.props.topic, edit: false })
     }
 
     deleteTopicEvent = e => {
         e.stopPropagation()
-        this.props.deleteTopic(this.props.topic._id)
-        if (this.props.topic._id === this.props.topicId) {
+        this.props.deleteTopic(this.props.topic.id)
+        if (this.props.topic.id === this.props.topicId) {
             this.props.history.push(`/course-editor/${this.props.courseId}/module/${this.props.moduleId}/lesson/${this.props.lessonId}`)
         }
     }
 
     titleChangeEvent = e => {
-        this.setState({ newTitle: e.target.value })
+        e.persist();
+        this.setState(prevState => ({
+            topic: {
+                ...prevState.topic,
+                title: e.target.value
+            }
+        }))
     }
 
     render() {
         return (
-            <div key={this.props.topic._id} className={`nav-item nav-link d-flex ${this.state.selected ? "active" : ""}`}>
+            <div key={this.props.topic.id} className={`nav-item nav-link d-flex ${this.state.selected ? "active" : ""}`}>
                 {!this.state.edit &&
                     <>
                         <div className="col">
-                            <Link to={`/course-editor/${this.props.courseId}/module/${this.props.moduleId}/lesson/${this.props.lessonId}/topic/${this.props.topic._id}`}
+                            <Link to={`/course-editor/${this.props.courseId}/module/${this.props.moduleId}/lesson/${this.props.lessonId}/topic/${this.props.topic.id}`}
                                 className={`${this.state.selected ? "text-white" : ""}`}>
-                                {this.props.topic.title}
+                                {this.state.topic.title}
                             </Link>
                         </div>
                         <div className="float-right">
                             <i className="fas fa-edit fa pt-1 p-1" onClick={this.enableEditMode}></i>
-                            <i className="fas fa-trash fa pt-1 p-1" onClick={() => this.props.deleteTopic(this.props.topic._id)}></i>
+                            <i className="fas fa-trash fa pt-1 p-1" onClick={() => this.props.deleteTopic(this.props.topic.id)}></i>
                         </div>
                     </>}
 
@@ -78,7 +87,7 @@ class TopicPillsItemComponent extends React.Component {
                         </div>
                         <div className="float-right">
                             <i className="far fa-save fa pt-1 p-1" onClick={this.updateTopicEvent}></i>
-                            <i className="fas fa-times pt-1 p-1" onClick={() => this.setState({ edit: false })}></i>
+                            <i className="fas fa-times pt-1 p-1" onClick={this.cancelChangeEvent}></i>
                         </div>
                     </>
                 )}

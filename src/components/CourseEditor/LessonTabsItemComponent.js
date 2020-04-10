@@ -8,7 +8,7 @@ class LessonTabsItemComponent extends React.Component {
 
     state = {
         edit: false,
-        newTitle: "",
+        lesson: this.props.lesson,
         selected: false
     }
 
@@ -36,10 +36,13 @@ class LessonTabsItemComponent extends React.Component {
 
     updateLessonEvent = e => {
         e.stopPropagation()
-        const lesson = { ...this.props.lesson }
-        lesson.title = this.state.newTitle;
-        this.props.updateLesson(lesson._id, lesson)
+        this.props.updateLesson(this.state.lesson._id, this.state.lesson)
         this.setState({ edit: false })
+    }
+
+    cancelChangeEvent = e => {
+        e.stopPropagation()
+        this.setState({ lesson: this.props.lesson, edit: false })
     }
 
     deleteLessonEvent = e => {
@@ -51,7 +54,13 @@ class LessonTabsItemComponent extends React.Component {
     }
 
     titleChangeEvent = e => {
-        this.setState({ newTitle: e.target.value })
+        e.persist();
+        this.setState(prevState => ({
+            lesson: {
+                ...prevState.lesson,
+                title: e.target.value
+            }
+        }))
     }
 
     render() {
@@ -61,7 +70,7 @@ class LessonTabsItemComponent extends React.Component {
                     <>
                         <div className="col">
                             <Link to={`/course-editor/${this.props.courseId}/module/${this.props.moduleId}/lesson/${this.props.lesson._id}`}>
-                                {this.props.lesson.title}
+                                {this.state.lesson.title}
                             </Link>
                         </div>
                         <div className="float-right">
@@ -77,7 +86,7 @@ class LessonTabsItemComponent extends React.Component {
                         </div>
                         <div className="float-right">
                             <i className="far fa-save fa pt-1 p-1" onClick={this.updateLessonEvent}></i>
-                            <i className="fas fa-times pt-1 p-1" onClick={() => this.setState({ edit: false })}></i>
+                            <i className="fas fa-times pt-1 p-1" onClick={this.cancelChangeEvent}></i>
                         </div>
                     </>
                 )}

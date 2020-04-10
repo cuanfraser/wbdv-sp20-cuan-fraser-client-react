@@ -23,24 +23,29 @@ class TopicPillsComponent extends React.Component {
     render() {
         return (
             <div>
-                <h3>Topics</h3>
+                {this.props.lessonId &&
+                    <>
+                        <h3>Topics</h3>
 
-                <ul className="nav nav-pills wbdv-topic-pill-list">
+                        <ul className="nav nav-pills wbdv-topic-pill-list">
 
-                    {this.props.topics &&
-                        this.props.topics.map(topic =>
-                            <TopicPillsItemComponent key={topic._id} history={this.props.history} courseId={this.props.courseId}
-                                moduleId={this.props.moduleId} lessonId={this.props.lessonId} topicId={this.props.topicId} topic={topic} />
-                        )
-                    }
+                            {this.props.topics &&
+                                this.props.topics.map(topic =>
+                                    <TopicPillsItemComponent key={topic.id} history={this.props.history} courseId={this.props.courseId}
+                                        moduleId={this.props.moduleId} lessonId={this.props.lessonId} topicId={this.props.topicId} topic={topic} />
+                                )
+                            }
 
-                    <li className="nav-item">
-                        <button className="nav-link link-button"
-                            onClick={() => this.props.createTopic(this.props.lessonId)}>
-                            <i className="fas fa-plus"></i>
-                        </button>
-                    </li>
-                </ul>
+                            <li className="nav-item">
+                                <button className="nav-link link-button"
+                                    onClick={() => this.props.createTopic(this.props.lessonId)}>
+                                    <i className="fas fa-plus"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </>
+                }
+
             </div>
         )
     }
@@ -51,11 +56,11 @@ const stateToPropertyMapper = (state) => ({
 })
 
 const dispatcherToPropertyMapper = (dispatch) => ({
-    createTopic: (tid, topic) =>
-        topicService.createTopic(tid, { title: "New Topic" })
+    createTopic: (lid) =>
+        topicService.createTopic(lid, { title: "New Topic", lessonId: lid })
             .then(actualTopic => dispatch(createTopic(actualTopic))),
-    findTopicsForLesson: (tid) =>
-        topicService.findTopicsForLesson(tid)
+    findTopicsForLesson: (lid) =>
+        topicService.findTopicsForLesson(lid)
             .then(topics => dispatch(findTopicsForLesson(topics)))
 })
 

@@ -2,7 +2,7 @@ import {CREATE_WIDGET, FIND_ALL_WIDGETS_FOR_TOPIC, UPDATE_WIDGET, DELETE_WIDGET}
 
 export const createWidget = (widget) => ({
     type: CREATE_WIDGET,
-    newWidget: widget
+    widget: widget
 })
 
 export const findAllWidgetsForTopic = (widgets) => ({

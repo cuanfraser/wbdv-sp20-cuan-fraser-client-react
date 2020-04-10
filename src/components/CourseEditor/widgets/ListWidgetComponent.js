@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import widgetService from "../../../services/WidgetService.js"
 import { deleteWidget, updateWidget } from "../../../actions/widgetActions"
 
-class ParagraphWidgetComponent extends React.Component {
+class ListWidgetComponent extends React.Component {
     state = {
         editing: false,
         widget: this.props.widget
@@ -68,6 +68,17 @@ class ParagraphWidgetComponent extends React.Component {
         }))
     }
 
+    valueChangeEvent = e => {
+        const newVal = parseInt(e.target.value)
+        this.setState(prevState => ({
+            widget: {
+                ...prevState.widget,
+                value: newVal
+            }
+        }))
+    }
+
+
     render() {
         return (
             <div>
@@ -75,7 +86,30 @@ class ParagraphWidgetComponent extends React.Component {
                     !this.state.editing &&
                     <div className="row">
                         <div className="col-11">
-                            <p>{this.state.widget.text}</p>
+                            {(parseInt(this.state.widget.value) === 0) &&
+                                <ul>
+                                    {
+                                        this.state.widget.text.split("\n").map((item, idx) =>
+                                            <li key={idx}>
+                                                {item}
+                                            </li>
+                                        )
+                                    }
+                                </ul>
+                            }
+
+                            {(parseInt(this.state.widget.value) === 1) &&
+                                <ol>
+                                    {
+                                        this.state.widget.text.split("\n").map((item, idx) =>
+                                            <li key={idx}>
+                                                {item}
+                                            </li>
+                                        )
+                                    }
+                                </ol>
+                            }
+
                         </div>
                         <button className="btn btn-block col-1" onClick={this.enableEditMode}>
                             <i className="fas fa-edit" ></i>
@@ -108,6 +142,19 @@ class ParagraphWidgetComponent extends React.Component {
                                 <textarea className="form-control wbdv-field wbdv-text" value={this.state.widget.text} placeholder="Paragraph text"
                                     onChange={this.textChangeEvent}
                                 />
+                            </div>
+                        </div>
+
+                        <div className="form-group row">
+                            <label htmlFor="listTypeFld" className="col-sm-1 col-form-label">
+                                List Type </label>
+                            <div className="col">
+                                <select className="form-control wbdv-field wbdv-type" id="listTypeFld"
+                                    onChange={this.valueChangeEvent}
+                                    value={this.state.widget.value}>
+                                    <option value={0}>Unordered List</option>
+                                    <option value={1}>Ordered List</option>
+                                </select>
                             </div>
                         </div>
 
@@ -170,4 +217,4 @@ const dispatcherToPropertyMapper = (dispatch) => ({
 })
 
 
-export default connect(stateToPropertyMapper, dispatcherToPropertyMapper)(ParagraphWidgetComponent);
+export default connect(stateToPropertyMapper, dispatcherToPropertyMapper)(ListWidgetComponent);

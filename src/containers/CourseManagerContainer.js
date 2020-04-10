@@ -1,6 +1,6 @@
 import React from "react";
 import { findAllCourses, deleteCourse, createCourse, updateCourse } from "../services/CourseService";
-import CourseEditorComponent from "../components/CourseEditor/CourseEditorComponent";
+import CourseEditorContainer from "./CourseEditorContainer";
 import CourseListComponent from "../components/CourseListComponent";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
@@ -108,40 +108,40 @@ class CourseManagerContainer extends React.Component {
                     <Route path="/course-editor/:courseId"
                         exact={true}
                         render={(props) =>
-                            <CourseEditorComponent
+                            <CourseEditorContainer
                                 {...props}
                                 history={props.history}
-                                courseId={props.match.params.courseId} />
+                                courseId={(props.match.params.courseId)}/>
                         } />
                     <Route path="/course-editor/:courseId/module/:moduleId"
                         exact={true}
                         render={(props) =>
-                            <CourseEditorComponent
+                            <CourseEditorContainer
                                 {...props}
                                 history={props.history}
-                                moduleId={props.match.params.moduleId}
-                                courseId={props.match.params.courseId} />
+                                moduleId={(props.match.params.moduleId)}
+                                courseId={(props.match.params.courseId)} />
                         } />
                     <Route path="/course-editor/:courseId/module/:moduleId/lesson/:lessonId"
                         exact={true}
                         render={(props) =>
-                            <CourseEditorComponent
+                            <CourseEditorContainer
                                 {...props}
                                 history={props.history}
-                                lessonId={props.match.params.lessonId}
-                                moduleId={props.match.params.moduleId}
-                                courseId={props.match.params.courseId} />
+                                lessonId={(props.match.params.lessonId)}
+                                moduleId={(props.match.params.moduleId)}
+                                courseId={(props.match.params.courseId)} />
                         } />
                     <Route path="/course-editor/:courseId/module/:moduleId/lesson/:lessonId/topic/:topicId"
                         exact={true}
                         render={(props) =>
-                            <CourseEditorComponent
+                            <CourseEditorContainer
                                 {...props}
                                 history={props.history}
-                                topicId={props.match.params.topicId}
-                                lessonId={props.match.params.lessonId}
-                                moduleId={props.match.params.moduleId}
-                                courseId={props.match.params.courseId} />
+                                topicId={Number(props.match.params.topicId)}
+                                lessonId={(props.match.params.lessonId)}
+                                moduleId={(props.match.params.moduleId)}
+                                courseId={(props.match.params.courseId)} />
                         } />
                 </Router>
             </div>
