@@ -1,9 +1,11 @@
 export const API_URL = "https://wbdv-generic-server.herokuapp.com/api/1293115"
+export const HEROKU_URL = "https://cs4550-hw6-javaserver-cfraser.herokuapp.com/api"
+
 export const COURSES_URL = `${API_URL}/courses`
 export const MODULES_URL = `${API_URL}/modules`
 export const LESSONS_URL = `${API_URL}/lessons`
-export const TOPICS_URL = `${API_URL}/topics`
-export const WIDGETS_URL = `${API_URL}/widgets`
+export const TOPICS_URL = `${HEROKU_URL}/topics`
+export const WIDGETS_URL = `${HEROKU_URL}/widgets`
 
 export const CREATE_MODULE = "CREATE_MODULE"
 export const FIND_MODULES_FOR_COURSE = "FIND_MODULES_FOR_COURSE"

@@ -1,7 +1,6 @@
-//import { TOPICS_URL, WIDGETS_URL } from "../constants";
-// TODO: Change BACK
-const WIDGETS_URL = "http://localhost:8080/api/widgets"
-const TOPICS_URL = "http://localhost:8080/api/topics"
+import { TOPICS_URL, WIDGETS_URL } from "../constants";
+// const WIDGETS_URL = "http://localhost:8080/api/widgets"
+// const TOPICS_URL = "http://localhost:8080/api/topics"
 
 export const createWidget = (topicId, widget) =>
     fetch(`${TOPICS_URL}/${topicId}/widgets`, {
